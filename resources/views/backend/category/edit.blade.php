@@ -21,23 +21,23 @@
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 mb-10 mt-10">
                         <label for="exampleFormControlInput1" class="required form-label">Title</label>
-                        <input type="text" class="form-control form-control-solid" name="title" value="{{old('title')}}" placeholder="Title"/>
+                        <input type="text" class="form-control form-control-solid" name="title" value="{{$category->title}}" placeholder="Title"/>
                     </div>
                     <div class="col-lg-12 col-sm-12 mb-10">
                         <label for="exampleFormControlInput1" class="required form-label">Summary</label>
-                        <textarea class="form-control form-control-solid" id="description" name="summary"  placeholder="Write someone your text">{{old('summary')}} </textarea>
+                        <textarea class="form-control form-control-solid" id="description" name="summary"  placeholder="Write someone your text">{{$category->summary}} </textarea>
                     </div>
                     <div class="col-lg-12 col-sm-12 mb-10">
                         <label for="exampleFormControlInput1" class="required form-label">Is Parent :</label>
-                        <input id="is_parent" type="checkbox" name="is_parent" value="1" checked/>Yes
+                        <input id="is_parent" type="checkbox" name="is_parent" value="{{$category->is_parent}}"/>{{$category->is_parent == 1 ? 'checked' : ''}}Yes
                     </div>
-                    <div class="col-lg-12 col-sm-12 mb-10 d-none" id="parent_cat_div">
+                    <div class="col-lg-12 col-sm-12 mb-10 {{$category->is_parent == 1 ? 'd-none' : ''}}" id="parent_cat_div">
                         <label for="exampleFormControlInput1">Parent Category</label>
                         <select class="form-select" data-control="select2" name="parent_id">
                             <option value="">--- Parent Category ---</option>
-                            {{-- @foreach ($parent_cats as $pcats)
-                            <option value="{{$pcats->id}}">{{$pcats->title}}</option>
-                            @endforeach --}}
+                            @foreach ($parent_cats as $pcats)
+                            <option value="{{$pcats->id}}" {{$pcats->id == $category->parent_id ? 'selected' : ''}}>{{$pcats->title}}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="col-lg-12 col-sm-12 mb-10">
@@ -80,5 +80,18 @@
     $(document).ready(function() {
         $('#description').summernote();
     });
+    </script>
+    <script>
+        $('#is_parent').change(function (e) {
+            e.preventDefault();
+            var is_checked = $('#is_parent').prop('checked');
+            // alert(is_checked);
+            if(is_checked){
+                $('#parent_cat_div').addClass('d-none');
+                $('#parent_cat_div').val('');
+            } else {
+                $('#parent_cat_div').removeClass('d-none');
+            }
+        });
     </script>
 @endsection

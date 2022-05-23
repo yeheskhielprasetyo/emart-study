@@ -65,12 +65,14 @@ class CategoryController extends Controller
         ]);
 
         $data = $request->all();
+        // dd($data);
         $slug = Str::slug($request->input('title'));
         $slug_content = Category::where('slug', $slug)->count();
         if($slug_content > 0) {
             $slug .= time() . '-' . $slug;
         }
         $data['slug'] = $slug;
+        $data['is_parent'] = $request->input('parent_id', 0);
         $status = Category::create($data);
         // dd($status);
         if($status){
@@ -100,9 +102,11 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = Category::find($id);
+        $parent_cats = Category::where('is_parent', 1)->orderBy('title', 'ASC')->get();
         if($category){
             return view('backend.category.edit', [
-                'category' => $category
+                'category' => $category,
+                'parent_cats' => $parent_cats
             ]);
         } else {
             return back()->with('error', 'Data not found');

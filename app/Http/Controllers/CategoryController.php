@@ -72,7 +72,7 @@ class CategoryController extends Controller
             $slug .= time() . '-' . $slug;
         }
         $data['slug'] = $slug;
-        $data['is_parent'] = $request->input('parent_id', 0);
+        $data['is_parent'] = $request->input('is_parent', 0);
         $status = Category::create($data);
         // dd($status);
         if($status){
@@ -122,7 +122,35 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $category = Category::find($id);
+        // return $request->all();
+        if($category){
+            $this->validate($request, [
+                'title' => 'string|required',
+                'summary' => 'string|nullable',
+                'is_parent' => 'sometimes|in:1',
+                'parent_id' => 'nullable|exists:categories,id',
+                'status' => 'nullable|in:active,inactive'
+            ]);
+
+            $data = $request->all();
+            // dd($data);
+            if($request->is_parent == 1){
+                $data['parent_id'] = null;
+            }
+
+            $data['parent_id'] = $request->input('parent_id', 0);
+            $status = $category->fill($data)->save();
+            // dd($status);
+            if($status){
+                return redirect()->route('category.index')->with('success', 'Successfully updated category');
+            }else {
+                return redirect()->back()->with('error', 'Something went wrong');
+            }
+        } else {
+            return back()->with('error', 'Data not found');
+        }
     }
 
     /**
@@ -134,9 +162,13 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category = Category::find($id);
+        $chiel_cat_id = Category::where('parent_id', $id)->pluck('id');
         if($category){
             $status = $category->delete();
             if($status){
+                if(count($chiel_cat_id) > 0) {
+                    Category::shiftChild($chiel_cat_id);
+                }
                 return redirect()->route('category.index')->with('success', 'Category Successfully deleted');
             } else {
                 return back()->with('error', 'Something went wrong');

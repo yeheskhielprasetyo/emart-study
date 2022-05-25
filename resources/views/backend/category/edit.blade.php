@@ -28,7 +28,7 @@
                         <textarea class="form-control form-control-solid" id="description" name="summary"  placeholder="Write someone your text">{{$category->summary}} </textarea>
                     </div>
                     <div class="col-lg-12 col-sm-12 mb-10">
-                        <label for="exampleFormControlInput1" class="required form-label">Is Parent :</label>
+                        <label for="exampleFormControlInput1" class="form-label">Is Parent :</label>
                         <input id="is_parent" type="checkbox" name="is_parent" value="{{$category->is_parent}}" {{$category->is_parent == 1 ? 'checked' : ''}} />Yes
                     </div>
                     <div class="col-lg-12 col-sm-12 mb-10 {{$category->is_parent == 1 ? 'd-none' : ''}}" id="parent_cat_div">

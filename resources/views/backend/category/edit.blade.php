@@ -35,9 +35,9 @@
                         <label for="exampleFormControlInput1">Parent Category</label>
                         <select class="form-select" data-control="select2" name="parent_id">
                             <option value="">--- Parent Category ---</option>
-                            {{-- @foreach ($parent_cats as $pcats)
-                            <option value="{{$pcats->id}}">{{$pcats->title}}</option>
-                            @endforeach --}}
+                            @foreach ($parent_cats as $pcats)
+                            <option value="{{$pcats->id}}" {{$pcats->id == $category->parent_id ? 'selected' : ''}}>{{$pcats->title}}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="col-lg-12 col-sm-12 mb-10">

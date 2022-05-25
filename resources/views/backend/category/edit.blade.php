@@ -21,17 +21,17 @@
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 mb-10 mt-10">
                         <label for="exampleFormControlInput1" class="required form-label">Title</label>
-                        <input type="text" class="form-control form-control-solid" name="title" value="{{old('title')}}" placeholder="Title"/>
+                        <input type="text" class="form-control form-control-solid" name="title" value="{{$category->title}}" placeholder="Title"/>
                     </div>
                     <div class="col-lg-12 col-sm-12 mb-10">
                         <label for="exampleFormControlInput1" class="required form-label">Summary</label>
-                        <textarea class="form-control form-control-solid" id="description" name="summary"  placeholder="Write someone your text">{{old('summary')}} </textarea>
+                        <textarea class="form-control form-control-solid" id="description" name="summary"  placeholder="Write someone your text">{{$category->summary}} </textarea>
                     </div>
                     <div class="col-lg-12 col-sm-12 mb-10">
                         <label for="exampleFormControlInput1" class="required form-label">Is Parent :</label>
-                        <input id="is_parent" type="checkbox" name="is_parent" value="1" checked/>Yes
+                        <input id="is_parent" type="checkbox" name="is_parent" value="{{$category->is_parent}}" {{$category->is_parent == 1 ? 'checked' : ''}} />Yes
                     </div>
-                    <div class="col-lg-12 col-sm-12 mb-10 d-none" id="parent_cat_div">
+                    <div class="col-lg-12 col-sm-12 mb-10 {{$category->is_parent == 1 ? 'd-none' : ''}}" id="parent_cat_div">
                         <label for="exampleFormControlInput1">Parent Category</label>
                         <select class="form-select" data-control="select2" name="parent_id">
                             <option value="">--- Parent Category ---</option>
@@ -48,17 +48,9 @@
                                     <i class="fa fa-picture-o"></i> Choose
                                 </a>
                                 </span>
-                                <input id="thumbnail" class="form-control" type="text" name="photo">
+                                <input id="thumbnail" class="form-control" type="text" name="photo" value="{{$category->photo}}">
                             </div>
                             <div id="holder" style="margin-top:15px;max-height:100px;"></div>
-                    </div>
-                    <div class="col-lg-12 col-sm-12 mb-10">
-                        <label for="exampleFormControlInput1" class="required form-label">Status</label>
-                        <select class="form-select" data-control="select2" name="status">
-                            <option value="">--- Status ---</option>
-                            <option value="active" {{old('status') == 'active' ? 'selected' : ' '}}>Active</option>
-                            <option value="inactive" {{old('status') == 'inactive' ? 'selected' : ' '}}>Inactive</option>
-                        </select>
                     </div>
                     <div class="col-mb-10 mb-10">
                         <button type="submit" class="btn btn-success">Update</button>
@@ -80,5 +72,18 @@
     $(document).ready(function() {
         $('#description').summernote();
     });
+    </script>
+    <script>
+        $('#is_parent').change(function (e) {
+            e.preventDefault();
+            var is_checked = $('#is_parent').prop('checked');
+            // alert(is_checked);
+            if(is_checked){
+                $('#parent_cat_div').addClass('d-none');
+                $('#parent_cat_div').val('');
+            } else {
+                $('#parent_cat_div').removeClass('d-none');
+            }
+        });
     </script>
 @endsection

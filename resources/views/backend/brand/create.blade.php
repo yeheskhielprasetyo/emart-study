@@ -1,5 +1,5 @@
 @extends('backend.layouts.index')
-@section('text', 'Add Banner')
+@section('text', 'Add Brand')
 @section('content')
 <div class="col-10">
     <div class="card card-flush shadow-sm">
@@ -15,11 +15,11 @@
         @endif
         </div>
         <div class="card-header">
-            <form action="{{route('banner.store')}}" method="POST" enctype="multipart/form-data">
+            <form action="{{route('brand.store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 mb-10 mt-10">
-                        <label for="exampleFormControlInput1" class="required form-label">Title</label>
+                        <label for="exampleFormControlInput1" class="form-label">Title</label>
                         <input type="text" class="form-control form-control-solid" name="title" value="{{old('title')}}" placeholder="Title"/>
                     </div>
                     <div class="col-lg-12 col-sm-12 mb-10">
@@ -33,18 +33,6 @@
                                 <input id="thumbnail" class="form-control" type="text" name="photo">
                             </div>
                             <div id="holder" style="margin-top:15px;max-height:100px;"></div>
-                    </div>
-                    <div class="col-lg-12 col-sm-12 mb-10">
-                        <label for="exampleFormControlInput1" class="required form-label">Description</label>
-                        <textarea class="form-control form-control-solid" id="description" name="description"  placeholder="Write someone your text">{{old('description')}} </textarea>
-                    </div>
-                    <div class="col-lg-12 col-sm-12 mb-10">
-                        <label for="exampleFormControlInput1" class="required form-label">Condition</label>
-                        <select class="form-select" data-control="select2" name="condition">
-                            <option value="">--- Condition ---</option>
-                            <option value="banner" {{old('condition') == 'banner' ? 'selected' : ' '}}>Banner</option>
-                            <option value="promo" {{old('condition') == 'promo' ? 'selected' : ' '}}>Promo</option>
-                        </select>
                     </div>
                     <div class="col-lg-12 col-sm-12 mb-10">
                         <label for="exampleFormControlInput1" class="required form-label">Status</label>

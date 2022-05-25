@@ -62,8 +62,31 @@
                                 <span class="menu-title">Add Category</span>
                             </a>
                         </div>
+                </div>
+                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                    <span class="menu-link">
+                        <span class="menu-icon">
+                            <i class="bi bi-archive fs-3"></i>
+                        </span>
+                        <span class="menu-title">Brand Management</span>
+                        <span class="menu-arrow"></span>
+                    </span>
+                    <div class="menu-sub menu-sub-accordion menu-active-bg">
+                            <a href="{{route('brand.index')}}" class="menu-link">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">All Brand</span>
+                            </a>
+                            <a href="{{route('brand.create')}}" class="menu-link">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Add Brand</span>
+                            </a>
+                        </div>
 
-                    </div>
+                </div>
             <div class="menu-item">
                 <a class="menu-link" href="../../demo13/dist/landing.html">
                     <span class="menu-icon">
